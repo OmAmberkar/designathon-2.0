@@ -1,0 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Share+Tech&display=swap");
+@import "tailwindcss";
+
+:root {
+    color-scheme: dark;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+@theme {
+    --color-background: #211e1b;
+    --color-foreground: #f5f5f5;
+    --color-accent: #f27c06;
+    --font-sans: "Share Tech", system-ui, -apple-system, sans-serif;
+}
