@@ -16,14 +16,14 @@ function Model() {
 
     return (
         <Center ref={modelRef}>
-            <primitive object={scene} scale={1} />
+            <primitive object={scene} scale={1.5} />
         </Center>
     );
 }
 
 const GalaxyModel = () => {
     return (
-        <div className="h-screen">
+        <div className="h-full absolute inset-0">
             <Canvas camera={{ position: [0, 1, 3] }} >
                 <ambientLight intensity={0.8} />
                 <directionalLight position={[5, 5, 5]} />

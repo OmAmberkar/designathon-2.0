@@ -1,6 +1,6 @@
 const MissionLogs = () => {
   return (
-    <div>MissionLogs</div>
+    <div className="h-screen">MissionLogs</div>
   )
 }
 
