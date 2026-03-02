@@ -73,14 +73,19 @@ const MissionLogs = () => {
             </div>
 
             {/* drill video (mobile) */}
-            <div className="w-[30%] max-w-[120px] aspect-[1/2] lg:hidden border border-primary/30 rounded-lg overflow-hidden backdrop-blur-sm z-20 flex-shrink-0 relative pointer-events-auto">
+            <div className="w-[30%] max-w-[120px] aspect-[1/2] lg:hidden border border-primary/30 rounded-lg overflow-hidden backdrop-blur-sm z-20 flex-shrink-0 relative pointer-events-auto bg-black">
               <video
                 src={assets.missionLogs.drill}
                 autoPlay
                 loop
                 muted
                 playsInline
+                preload="auto"
                 className="absolute inset-0 w-full h-full object-cover mix-blend-screen opacity-90"
+                onError={(e) => {
+                  const vid = e.currentTarget;
+                  setTimeout(() => vid.load(), 2000);
+                }}
               />
             </div>
           </div>
@@ -104,6 +109,7 @@ const MissionLogs = () => {
                 loop
                 muted
                 playsInline
+                preload="auto"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -151,6 +157,7 @@ const MissionLogs = () => {
                   loop
                   muted
                   playsInline
+                  preload="auto"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -165,14 +172,19 @@ const MissionLogs = () => {
           </div>
 
           {/* drill video (desktop) */}
-          <div className="hidden w-full h-48 lg:block lg:relative lg:w-full lg:h-64 xl:h-72 border border-primary/30 rounded-lg overflow-hidden backdrop-blur-sm pointer-events-auto z-20">
+          <div className="hidden w-full h-48 lg:block lg:relative lg:w-full lg:h-64 xl:h-72 border border-primary/30 rounded-lg overflow-hidden backdrop-blur-sm pointer-events-auto z-20 bg-black">
             <video
               src={assets.missionLogs.drill}
               autoPlay
               loop
               muted
               playsInline
+              preload="auto"
               className="absolute inset-0 w-full h-full object-cover mix-blend-screen opacity-90"
+              onError={(e) => {
+                const vid = e.currentTarget;
+                setTimeout(() => vid.load(), 2000);
+              }}
             />
           </div>
 

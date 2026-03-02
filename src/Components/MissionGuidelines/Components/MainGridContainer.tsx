@@ -1,26 +1,44 @@
 import { assets } from "@/lib/assets";
-import { links } from "@/lib/links";
 import LeftColumn from "./LeftColumn";
 import CenterVisual from "./CenterVisual";
 import RightColumn from "./RightColumn";
 import MobileCard from "./MobileCard";
 
+const RULEBOOK_URL =
+  "https://d8it4huxumps7.cloudfront.net/uploads/attachements/files/8ec105a8-9497-416f-8269-cf185e43f298.pdf";
+
 const guidelineContent = [
   {
-    title: "Guideline 1",
-    lines: ["yyaaaaappppp yappppp", "yappppppppppppppppp", "ppp"],
+    title: "Originality",
+    lines: [
+      "No Pre-built UI Kits.",
+      "You cannot open a previously saved Figma file.",
+      "All frames and layouts must be created after the event starts.",
+    ],
   },
   {
-    title: "Guideline 2",
-    lines: ["yyaaaaappppp yappppp", "yappppppppppppppppp", "ppp"],
+    title: "Assets",
+    lines: [
+      "You MAY use open-source icon packs (Phosphor, Material, etc.),",
+      "stock photos (Unsplash),",
+      "and 3D illustrations.",
+    ],
   },
   {
-    title: "Guideline 3",
-    lines: ["yyaaaaappppp yappppp", "yappppppppppppppppp", "ppp"],
+    title: "Team Size",
+    lines: [
+      "EACH TEAM MUST CONSIST OF:",
+      "MINIMUM — 2 members",
+      "MAXIMUM — 3 members",
+    ],
   },
   {
-    title: "Guideline 4",
-    lines: ["yyaaaaappppp yappppp", "yappppppppppppppppp", "ppp"],
+    title: "AI Policy",
+    lines: [
+      "[ALLOWED] Generating images (Midjourney) or text (ChatGPT).",
+      "[BANNED] UI Layouts / Wireframes (Uizard, Galileo AI, etc.).",
+      '"We want to see your design skills, not the bot\'s."',
+    ],
   },
 ];
 
@@ -65,8 +83,8 @@ const MainGridContainer = () => {
             </div>
 
             <div className="space-y-1 text-xs sm:text-sm leading-[1.3] text-white/85 md:text-2xl">
-              {guidelineContent[3].lines.map((line) => (
-                <p key={line}>{line}</p>
+              {guidelineContent[3].lines.map((line, i) => (
+                <p key={i}>{line}</p>
               ))}
             </div>
           </div>
@@ -86,12 +104,12 @@ const MainGridContainer = () => {
 
             <div className="absolute bottom-3 left-2 right-2 flex justify-center">
               <a
-                href={links.downloadGuidelines}
+                href={RULEBOOK_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="h-9 w-full max-w-[calc(100%-8px)] rounded-md border border-white bg-[#F27C06] text-[10px] sm:text-xs font-bold uppercase tracking-wider text-white transition-colors hover:bg-orange-600 px-2 flex items-center justify-center"
               >
-                Download
+                Download Rulebook
               </a>
             </div>
           </div>

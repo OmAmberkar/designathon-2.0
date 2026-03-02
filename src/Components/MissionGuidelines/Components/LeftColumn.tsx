@@ -8,14 +8,17 @@ const LeftColumn = () => {
           <div className="flex items-center gap-3 mb-3">
             <div className="w-3 h-3 bg-orange-500" />
             <h3 className="text-white text-sm lg:text-xl xl:text-2xl font-bold tracking-wider">
-              Guideline 1
+              Originality
             </h3>
           </div>
-          <div className="space-y-1 text-white/70 text-xs lg:text-sm tracking-wide">
-            <p>yap yap yap</p>
-            <p>yap yap yap</p>
-            <p>yap yap yap</p>
-            <p>yap yap yap</p>
+          <div className="space-y-1.5 text-white/70 text-xs lg:text-sm tracking-wide leading-relaxed">
+            <p className="text-primary font-semibold text-xs lg:text-sm">
+              No Pre-built UI Kits
+            </p>
+            <p>
+              You cannot open a previously saved Figma file. All frames and
+              layouts must be created after the event has started.
+            </p>
           </div>
         </div>
       </div>
@@ -34,14 +37,17 @@ const LeftColumn = () => {
           <div className="flex items-center gap-3 mb-3">
             <div className="w-3 h-3 bg-orange-500" />
             <h3 className="text-white text-sm lg:text-xl xl:text-2xl font-bold tracking-wider">
-              Guideline 2
+              Assets
             </h3>
           </div>
-          <div className="space-y-1 text-white/70 text-xs lg:text-sm tracking-wide">
-            <p>yap yap yap</p>
-            <p>yap yap yap</p>
-            <p>yap yap yap</p>
-            <p>yap yap yap</p>
+          <div className="space-y-1.5 text-white/70 text-xs lg:text-sm tracking-wide leading-relaxed">
+            <p className="text-primary font-semibold text-xs lg:text-sm">
+              Allowed Resources
+            </p>
+            <p>
+              You MAY use open-source icon packs (Phosphor, Material, etc.),
+              stock photos (Unsplash), and 3D illustrations.
+            </p>
           </div>
         </div>
       </div>

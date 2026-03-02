@@ -67,7 +67,7 @@ const Faqs = () => {
       <div className="relative w-full flex-1 lg:h-full lg:w-[60%] flex items-center justify-center lg:justify-start lg:pl-10 xl:pl-20 pointer-events-none pb-0 lg:pb-0 overflow-hidden">
         <div className="relative w-[700px] h-[1060px] shrink-0 scale-[0.44] sm:scale-[0.50] md:scale-[0.85] lg:scale-[0.7] xl:scale-[0.85] 2xl:scale-[0.95] origin-center lg:origin-left -mt-[20vh] sm:-mt-[22vh] lg:mt-0 lg:ml-0 translate-x-[-5%] sm:-translate-x-[5%] lg:translate-x-0 pointer-events-auto">
           {/* origin block */}
-          <div className="absolute top-[0px] left-28 w-40 h-44 bg-primary rounded-tl-4xl rounded-tr-4xl rounded-bl-4xl z-10" />
+          <div className="absolute top-[0px] left-28 w-40 h-44 bg-primary rounded-tl-4xl rounded-tr-4xl    rounded-bl-4xl z-10" />
 
           {/* card 1 — WHO CAN PARTICIPATE */}
           <div className="absolute top-44 left-72 w-52 h-52 sm:w-52 sm:h-52 z-20">
@@ -103,14 +103,14 @@ const Faqs = () => {
           <div className="absolute md:hidden   top-[816px]  left-2 w-[224px] h-[340px] z-20">
             <FlippingCard
               variant="white"
-              className="!rounded-tl-none shadow-none"
+              className="!rounded-tl-none rounded-b-4xl shadow-none"
               frontContent={<CardFront text={faqContent[1].question} />}
               backContent={<CardBack text={faqContent[1].answer} />}
             />
           </div>
 
           {/* connector block */}
-          <div className="absolute top-138 -left-63 md:-left-64 w-64 h-72  bg-white z-10" />
+          <div className="absolute rounded-b-4xl top-138 -left-63 md:-left-64 w-64 h-72  bg-white z-10" />
 
           <InvertedCorner
             orientation="bottom-right"
@@ -153,7 +153,7 @@ const Faqs = () => {
           <div className="absolute top-[640px] left-[272px] md:left-[256px] w-52 h-52 sm:w-56 sm:h-56 z-20">
             <FlippingCard
               variant="white"
-              className="!rounded-tr-none shadow-none"
+              className="!rounded-tr-none   shadow-none"
               frontContent={<CardFront text={faqContent[3].question} />}
               backContent={<CardBack text={faqContent[3].answer} />}
             />

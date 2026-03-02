@@ -17,14 +17,16 @@ const RightColumn = () => {
           <div className="flex items-center gap-3 mb-3">
             <div className="w-3 h-3 bg-orange-500" />
             <h3 className="text-white text-sm lg:text-xl xl:text-2xl font-bold tracking-wider">
-              Guideline 3
+              Team Size
             </h3>
           </div>
-          <div className="space-y-1 text-white/70 text-xs lg:text-sm tracking-wide">
-            <p>yap yap yap</p>
-            <p>yap yap yap</p>
-            <p>yap yap yap</p>
-            <p>yap yap yap</p>
+          <div className="space-y-1.5 text-white/70 text-xs lg:text-sm tracking-wide leading-relaxed">
+            <p className="text-primary font-semibold text-xs lg:text-sm">
+              Collaboration
+            </p>
+            <p>EACH TEAM MUST CONSIST OF:</p>
+            <p>MINIMUM — 2 members</p>
+            <p>MAXIMUM — 3 members</p>
           </div>
         </div>
       </div>
@@ -34,14 +36,21 @@ const RightColumn = () => {
           <div className="flex items-center gap-3 mb-3">
             <div className="w-3 h-3 bg-orange-500" />
             <h3 className="text-white text-sm lg:text-xl xl:text-2xl font-bold tracking-wider">
-              Guideline 4
+              AI Policy
             </h3>
           </div>
-          <div className="space-y-1 text-white/70 text-xs lg:text-sm tracking-wide">
-            <p>yap yap yap</p>
-            <p>yap yap yap</p>
-            <p>yap yap yap</p>
-            <p>yap yap yap</p>
+          <div className="space-y-1.5 text-white/70 text-xs lg:text-sm tracking-wide leading-relaxed">
+            <p>
+              <span className="text-green-400 font-semibold">[ ALLOWED ]</span>{" "}
+              Generating images (Midjourney) or text (ChatGPT).
+            </p>
+            <p>
+              <span className="text-red-400 font-semibold">[ BANNED ]</span> UI
+              Layouts / Wireframes (Uizard, Galileo AI, etc.).
+            </p>
+            <p className="text-white/50 italic text-xs mt-1">
+              "We want to see your design skills, not the bot's."
+            </p>
           </div>
         </div>
       </div>

@@ -45,6 +45,7 @@ const MissionRewards = () => {
                 start: "top 80%",
                 end: "top top",
                 scrub: true,
+                invalidateOnRefresh: true,
               },
             },
           );
@@ -63,6 +64,7 @@ const MissionRewards = () => {
               start: "top 50%",
               end: "top top",
               scrub: true,
+              invalidateOnRefresh: true,
             },
             force3D: true,
           },
@@ -71,9 +73,8 @@ const MissionRewards = () => {
         const cards = cardsRef.current.filter(Boolean);
 
         if (isDesktop) {
-          const revealOrder = [2, 0, 1]; // 3rd -> 2nd -> 1st
+          const revealOrder = [2, 0, 1];
 
-          // initial
           cards.forEach((card, i) => {
             const direction = i === 1 ? 0 : i === 0 ? -1 : 1;
             gsap.set(card, {
@@ -86,11 +87,10 @@ const MissionRewards = () => {
               yPercent: 0,
               opacity: 1,
               force3D: true,
-              position: "static", // static on desktop
+              position: "static",
             });
           });
 
-          // pinned timeline for sequential reveal
           const tl = gsap.timeline({
             scrollTrigger: {
               trigger: sectionRef.current,
@@ -98,12 +98,13 @@ const MissionRewards = () => {
               end: "+=2200",
               scrub: 1,
               pin: true,
+              pinSpacing: true,
+              invalidateOnRefresh: true,
             },
           });
 
           tl.to({}, { duration: 0.15 });
 
-          // reveal each card: tilt to straight
           revealOrder.forEach((cardIndex, i) => {
             if (!cards[cardIndex]) return;
             tl.to(
@@ -140,13 +141,15 @@ const MissionRewards = () => {
             scrollTrigger: {
               trigger: sectionRef.current,
               start: "top top",
-              end: "+=3500", // longer scroll path for 3 cards sequence
+              end: "+=3500",
               scrub: 1,
               pin: true,
+              pinSpacing: true,
+              invalidateOnRefresh: true,
             },
           });
 
-          tl.to({}, { duration: 0.1 }); // slight delay before first actions
+          tl.to({}, { duration: 0.1 });
 
           const animationDuration = 1;
           const rotateAmount = 45;
@@ -156,7 +159,6 @@ const MissionRewards = () => {
           mobileRevealOrder.forEach((cardIndex, i) => {
             const card = cards[cardIndex];
 
-            // 1. Roll IN from bottom
             tl.to(
               card,
               {
@@ -182,7 +184,6 @@ const MissionRewards = () => {
             }
           });
 
-          // hold at end so the last card stays planted
           tl.to({}, { duration: 0.5 });
         }
       },
@@ -228,10 +229,7 @@ const MissionRewards = () => {
   ];
 
   return (
-    <div
-      ref={sectionRef}
-      className="relative w-full max-w-[100vw] min-h-screen overflow-x-hidden select-none"
-    >
+    <div ref={sectionRef} className="relative w-full min-h-screen select-none">
       <div
         ref={contentRef}
         className="relative w-full min-h-screen bg-[#000000] overflow-hidden"

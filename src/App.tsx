@@ -36,6 +36,28 @@ function App() {
   const lenis = useLenis();
   const engineRef = useRef<ScrollEngine | null>(null);
 
+  // single global resize handler — recalculates all pin spacers
+  useEffect(() => {
+    if (isLoading) return;
+    let timer: ReturnType<typeof setTimeout> | null = null;
+
+    const onResize = () => {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        requestAnimationFrame(() => ScrollTrigger.refresh(true));
+      }, 400);
+    };
+
+    window.addEventListener("resize", onResize);
+    window.addEventListener("orientationchange", onResize);
+    return () => {
+      if (timer) clearTimeout(timer);
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("orientationchange", onResize);
+    };
+  }, [isLoading]);
+
+  // parallax shrink on mission logs when rewards scrolls over it
   useLayoutEffect(() => {
     if (isLoading) return;
     gsap.registerPlugin(ScrollTrigger);
@@ -55,6 +77,7 @@ function App() {
           start: "top 90%",
           end: "top 25%",
           scrub: true,
+          invalidateOnRefresh: true,
         },
       });
     });
@@ -103,33 +126,54 @@ function App() {
             <MissionLogs />
           </div>
           <Suspense fallback={<div className="min-h-screen bg-black" />}>
-            <div id="rewards" className="relative z-20">
+            <div
+              id="rewards"
+              className="relative"
+              style={{ zIndex: 20, isolation: "isolate" }}
+            >
               <MissionRewards />
             </div>
           </Suspense>
         </div>
 
         <Suspense fallback={<div className="min-h-screen bg-background" />}>
-          <div id="timeline" className="relative z-20">
+          <div
+            id="timeline"
+            className="relative bg-background"
+            style={{ zIndex: 30, isolation: "isolate" }}
+          >
             <TimeLine />
           </div>
         </Suspense>
 
         <Suspense fallback={<div className="min-h-screen bg-background" />}>
-          <div id="guidelines" className="relative z-20">
+          <div
+            id="guidelines"
+            className="relative"
+            style={{ zIndex: 30, isolation: "isolate" }}
+          >
             <MissionGuidelines />
           </div>
-          <div id="faqs" className="relative z-20">
+          <div
+            id="faqs"
+            className="relative"
+            style={{ zIndex: 30, isolation: "isolate" }}
+          >
             <Faqs />
           </div>
-          <div id="about" className="relative z-20 bg-background">
+          <div
+            id="about"
+            className="relative bg-background"
+            style={{ zIndex: 30, isolation: "isolate" }}
+          >
             <About />
           </div>
         </Suspense>
 
         <div
           id="ribbon-section"
-          className="relative z-20 overflow-hidden py-6 sm:py-10 bg-background"
+          className="relative overflow-hidden py-6 sm:py-10 bg-background"
+          style={{ zIndex: 30, isolation: "isolate" }}
         >
           <InfiniteRibbon
             rotation={3}

@@ -1,5 +1,4 @@
 import { assets } from "@/lib/assets";
-import { links } from "@/lib/links";
 
 const GALAXY_BG_BASE = {
   backgroundImage: `url('${assets.guidelines.galaxyImage}')`,
@@ -12,6 +11,9 @@ const GalaxyOverlay = () => (
     <div className="absolute inset-0 bg-black/20" />
   </>
 );
+
+const RULEBOOK_URL =
+  "https://d8it4huxumps7.cloudfront.net/uploads/attachements/files/8ec105a8-9497-416f-8269-cf185e43f298.pdf";
 
 const CenterVisual = () => {
   return (
@@ -44,12 +46,12 @@ const CenterVisual = () => {
         <GalaxyOverlay />
         <div className="absolute bottom-3 right-3 left-3 flex justify-end cursor-pointer">
           <a
-            href={links.downloadGuidelines}
+            href={RULEBOOK_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="h-10 xl:h-12 w-44 xl:w-50 bg-primary border border-white hover:bg-orange-600 transition-colors rounded-md text-white font-bold tracking-widest text-xs xl:text-sm uppercase flex items-center justify-center"
           >
-            Download Guidelines
+            Download Rulebook
           </a>
         </div>
       </div>

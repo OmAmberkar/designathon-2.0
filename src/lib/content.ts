@@ -3,21 +3,22 @@
 export const faqContent = [
   {
     question: "WHO CAN PARTICIPATE?",
-    answer: "Students interested in UI/UX.",
+    answer:
+      "Any college student passionate about UI/UX design can participate. No prior professional experience needed — just creativity and enthusiasm.",
   },
   {
     question: "WHAT TOOLS CAN WE USE?",
     answer:
-      "Figma, Adobe XD, Sketch, or any design tool of your choice.",
+      "Figma, Adobe XD, Sketch, or any design tool of your choice. You MAY also use open-source icon packs and stock photos.",
   },
   {
     question: "HOW WILL JUDGING BE DONE?",
     answer:
-      "Based on Empathy & UX, Visual Design (UI), Problem Solving, Innovation, Presentation.",
+      "Based on Empathy & UX, Visual Design (UI), Problem Solving, Innovation, and Presentation quality.",
   },
   {
     question: "HOW MANY MEMBERS CAN BE IN A TEAM?",
-    answer: "Each team must consist of 2 to 3 members.",
+    answer: "Each team must consist of minimum 2 and maximum 3 members.",
   },
 ];
 
@@ -57,7 +58,6 @@ export const aboutContent = {
   headingLine2: "GDGC ACE",
   paragraph:
     "GDGC ACE empowers tech enthusiasts. We foster a vibrant community through workshops, hackathons, and industry connections. Our members explore cutting-edge technologies, build strong portfolios, and gain the skills to succeed in the evolving tech world.",
-  ctaText: "VISIT GDGC OFFICIAL WEBSITE",
 };
 
 export const heroContent = {

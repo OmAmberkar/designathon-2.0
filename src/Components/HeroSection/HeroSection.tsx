@@ -11,9 +11,10 @@ import { assets } from "@/lib/assets.js";
 import Timer from "./components/Timer.js";
 import NavigationMenu from "../navigationMenu.js";
 import { InvertedCorner } from "./SocialIcons.js";
+import { links } from "@/lib/links.js";
 
 const HeroSection = () => {
-  const timeLeft = useCountdown(14);
+  const timeLeft = useCountdown();
   const { mouseOffset, sectionRef, handleMouseMove, handleMouseLeave } =
     useParallax();
   return (
@@ -241,9 +242,14 @@ const HeroSection = () => {
               </span>
             </div>
 
-            <button className="bg-accent text-white font-bold py-2 mr-4 sm:mr-0 px-3 sm:py-4 md:py-5 sm:px-5 md:px-8 md:rounded-2xl rounded-lg uppercase tracking-widest text-sm md:text-lg border-2 border-black/5 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 active:shadow-none active:translate-x-1 active:translate-y-1 focus-visible:animate-pulse transition-all duration-150 ease-out">
+            <a
+              href={links.registration}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-accent text-white font-bold py-2 mr-4 sm:mr-0 px-3 sm:py-4 md:py-5 sm:px-5 md:px-8 md:rounded-2xl rounded-lg uppercase tracking-widest text-sm md:text-lg border-2 border-black/5 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 active:shadow-none active:translate-x-1 active:translate-y-1 focus-visible:animate-pulse transition-all duration-150 ease-out inline-flex items-center justify-center"
+            >
               Join Now
-            </button>
+            </a>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF, Center } from "@react-three/drei";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import { Group } from "three";
 
 const scrollState = { velocity: 0 };
@@ -48,18 +48,45 @@ function Model() {
 const GalaxyModel = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
-  useEffect(() => {
+  // reconnects the observer so rootMargin recalculates after layout shifts
+  const connectObserver = useCallback(() => {
     const el = containerRef.current;
     if (!el) return;
 
-    const observer = new IntersectionObserver(
+    if (observerRef.current) {
+      observerRef.current.disconnect();
+    }
+
+    observerRef.current = new IntersectionObserver(
       ([entry]) => setIsVisible(entry.isIntersecting),
-      { rootMargin: "200px" },
+      { rootMargin: "300px" },
     );
-    observer.observe(el);
-    return () => observer.disconnect();
+    observerRef.current.observe(el);
   }, []);
+
+  useEffect(() => {
+    connectObserver();
+
+    let refreshTimer: ReturnType<typeof setTimeout> | null = null;
+    const handleResize = () => {
+      if (refreshTimer) clearTimeout(refreshTimer);
+      refreshTimer = setTimeout(() => {
+        connectObserver();
+      }, 500);
+    };
+
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", handleResize);
+
+    return () => {
+      if (refreshTimer) clearTimeout(refreshTimer);
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleResize);
+      if (observerRef.current) observerRef.current.disconnect();
+    };
+  }, [connectObserver]);
 
   return (
     <div

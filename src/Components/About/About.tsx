@@ -1,7 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
-import { links } from "@/lib/links";
 import { aboutContent } from "@/lib/content";
 import Carousel from "./Carousel";
 
@@ -35,16 +34,11 @@ const About = () => {
       const paraLines = container.current?.querySelectorAll(".about-para-line");
       const arrow = container.current?.querySelector(".about-arrow");
       const image = container.current?.querySelector(".about-image-animation");
-      const button = container.current?.querySelector(
-        ".about-button-animation",
-      );
-
       const allTargets = [
         ...(chars ? Array.from(chars) : []),
         ...(paraLines ? Array.from(paraLines) : []),
         ...(arrow ? [arrow] : []),
         ...(image ? [image] : []),
-        ...(button ? [button] : []),
       ];
 
       // elements start visible via css, gsap hides them for animation
@@ -58,7 +52,6 @@ const About = () => {
       }
       if (arrow) gsap.set(arrow, { x: -20 });
       if (image) gsap.set(image, { x: 10 });
-      if (button) gsap.set(button, { y: 20 });
 
       // plays the reveal animation
       const playReveal = () => {
@@ -101,10 +94,6 @@ const About = () => {
 
         if (image) {
           tl.to(image, { x: 0, opacity: 1, duration: 0.8 }, "-=0.3");
-        }
-
-        if (button) {
-          tl.to(button, { y: 0, opacity: 1, duration: 0.5 }, "-=0.4");
         }
       };
 
@@ -217,12 +206,6 @@ const About = () => {
               {aboutContent.paragraph}
             </p>
           </div>
-
-          <a href={links.gdgcWebsite} target="_blank" rel="noopener noreferrer">
-            <button className="about-button-animation bg-[#F27C06] active:scale-95 px-4 sm:px-6 py-2.5 sm:py-3 lg:py-4 rounded-xl text-sm sm:text-base lg:text-2xl text-center text-white tracking-wider font-semibold shadow-hover-btn transition-all duration-150 w-full sm:w-auto">
-              {aboutContent.ctaText}
-            </button>
-          </a>
         </div>
 
         {/* carousel — rectangular full-width on mobile, L-shape clip on desktop */}
