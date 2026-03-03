@@ -18,6 +18,7 @@ import { ScrollEngine } from "@/lib/scroll-engine";
 import ScrollEngineContext from "@/lib/scroll-engine-context";
 import { ribbonContent } from "@/lib/content";
 import NavigationMenu from "@/Components/navigationMenu";
+import AstronautCursor from "@/Components/AstronautCursor";
 
 const MissionRewards = lazy(
   () => import("@/Components/MissionRewards/MissionRewards"),
@@ -88,6 +89,7 @@ function App() {
       />
 
       <NavigationMenu />
+      <AstronautCursor />
 
       <div className="overflow-x-hidden relative z-10">
         <div id="home" className="bg-background">

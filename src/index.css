@@ -136,6 +136,7 @@
   * {
     @apply border-border;
     scrollbar-width: none;
+    cursor: none !important;
   }
   body {
     @apply bg-background text-foreground;
