@@ -207,12 +207,6 @@ const MobileTimelineCard = ({
           }}
         />
 
-        {/* orange squares */}
-        {/* <div className="relative z-10 flex flex-col items-center gap-1.5 mt-6">
-          <OrangeRect fill="#F27C06" ref={orangeRef1} className="h-3 w-3" />
-          <OrangeRect fill="#F27C06" ref={orangeRef2} className="h-4 w-4" />
-        </div> */}
-
         {/* glowing dot*/}
         <div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full z-10"
@@ -224,7 +218,7 @@ const MobileTimelineCard = ({
       </div>
 
       {/* right content area */}
-      <div ref={contentRef} className="flex-1 pl-4 sm:pl-6 pb-8 pt-2">
+      <div ref={contentRef} className="flex-1 pl-4 sm:pl-6 pb-8 pt-2 relative">
         {/* date block */}
         <div className="mb-4">
           <div className="flex items-start gap-0.5">
@@ -249,7 +243,8 @@ const MobileTimelineCard = ({
             {event.month}
           </p>
         </div>
-
+        
+      
         {/* galaxy image*/}
         <div className="relative w-full max-w-[280px] sm:max-w-[320px] aspect-square my-3">
           <img
@@ -284,10 +279,9 @@ const MobileTimelineCard = ({
             className="mob-tl-details absolute top-1 left-1 w-14 sm:w-16"
           />
         </div>
-
-        {/* event title */}
+  {/* event title */}
         <h3
-          className="mob-tl-title text-[1.6rem] sm:text-[2rem] leading-tight tracking-wide text-white font-bold mt-4"
+          className="mob-tl-title absolute -top-2 right-6 text-[1.6rem] sm:text-[2rem] leading-tight tracking-wide text-white font-bold mt-4"
           style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)" }}
         >
           {event.title}
@@ -306,6 +300,7 @@ const MobileTimelineCard = ({
             </>
           )}
         </h3>
+
       </div>
     </div>
   );
@@ -401,7 +396,7 @@ const MobileVenue = () => {
           VENUE
         </h2>
 
-        <div className="mob-venue-img relative w-full max-w-sm rounded-lg overflow-hidden border border-white/10">
+        <div className="mob-venue-img relative w-full max-w-sm rounded-lg overflow-hidden ">
           <img
             src={assets.timeline.venueFinal}
             alt="Atharva College of Engineering"

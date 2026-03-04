@@ -30,7 +30,7 @@ const CardFront = ({ text }: { text: string }) => (
 
 const CardBack = ({ text }: { text: string }) => (
   <div className="flex flex-col h-full w-full items-center justify-center relative text-center">
-    <p className="text-[1.15rem] sm:text-[1.25rem] lg:text-[1.15rem] font-medium font-sans opacity-80 leading-snug">
+    <p className="text-[1rem] sm:text-[1.25rem] lg:text-[1.15rem] font-medium font-sans opacity-80 leading-snug">
       {text}
     </p>
   </div>
@@ -59,7 +59,7 @@ const Faqs = () => {
         <OptimizedImage
           src={assets.faqs.gif}
           alt="FAQ Animate"
-          className="w-full h-full top-[-24vh] right-[-36vw] object-contain absolute top-0 m-auto pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          className="w-full h-full -right-40 object-contain absolute -top-60 m-auto pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         />
       </div>
 

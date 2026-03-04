@@ -58,7 +58,7 @@ export function FlippingCard({
                 : "bg-primary text-white border border-white/20",
             )}
           >
-            <div className="h-full w-full [transform:translateZ(40px)] flex flex-col justify-center text-center overflow-hidden">
+            <div className="h-full w-full  [transform:translateZ(40px)] flex flex-col justify-center text-center overflow-hidden">
               {backContent}
             </div>
           </div>

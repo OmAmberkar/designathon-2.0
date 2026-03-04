@@ -3,7 +3,7 @@ import OrangeBox from "./Components/OrangeBox";
 
 const MissionGuidelines = () => {
   return (
-    <section className="w-full bg-black lg:bg-background border-t border-white/10 relative overflow-hidden h-dvh max-h-screen flex flex-col">
+    <section className="w-full bg-background lg:bg-background border-t border-white/10 relative overflow-hidden h-dvh max-h-screen flex flex-col">
       <div className="hidden md:block">
         <OrangeBox />
       </div>

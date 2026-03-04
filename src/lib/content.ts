@@ -28,12 +28,12 @@ export const faqContent = [
   {
     question: "IS IT ONLINE OR OFFLINE?",
     answer:
-      "Round 1 is online (16–17 March). The Grand Finale on 23 March is offline at Atharva College of Engineering, Mumbai.",
+      "Round 1 is online (16–17 March). The Grand Finale on 23 March is offline.",
   },
   {
-    question: "WHAT SHOULD WE SUBMIT?",
+    question: "WHAT ARE THE DELIVERABLES?",
     answer:
-      "A complete design prototype with all screens, interactions, and a brief presentation explaining your design decisions and user flow.",
+      "A complete design prototype with all screens, interactions, and a brief presentation explaining your work.",
   },
 ];
 
