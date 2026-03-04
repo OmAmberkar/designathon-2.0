@@ -31,7 +31,7 @@ const TlCard3 = forwardRef<TlCardHandle>((_props, ref) => {
         <div className="z-10 text-center flex flex-col items-center">
           <div className="flex justify-center items-start gap-2">
             <h1 className="tl-card-text text-[6.2em] tracking-tighter leading-20">
-              14
+              16
             </h1>
             <p className="tl-card-text text-3xl mt-3">th</p>
           </div>
