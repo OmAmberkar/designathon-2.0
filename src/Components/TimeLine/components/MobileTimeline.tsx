@@ -2,7 +2,6 @@ import { useRef, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { assets } from "@/lib/assets";
-import OrangeRect from "./OrangeRect";
 import type { OrangeRectHandle } from "@/lib/types";
 
 interface TimelineEvent {
@@ -31,7 +30,7 @@ const timelineEvents: TimelineEvent[] = [
   },
   {
     id: 2,
-    date: "12",
+    date: "15",
     ordinal: "th",
     month: "MARCH",
     title: "REGISTRATION",
@@ -41,7 +40,7 @@ const timelineEvents: TimelineEvent[] = [
   },
   {
     id: 3,
-    date: "14",
+    date: "16",
     ordinal: "th",
     month: "MARCH",
     title: "MISSION REVEAL",
