@@ -4,13 +4,23 @@ import { useAuth } from '@/lib/auth'
 import { PSCard } from '@/Components/ui/ps-card'
 import { RocketLanding3D } from '@/Components/ui/rocket-landing-3d'
 import NavigationMenu from '@/Components/navigationMenu'
-import type { ProblemStatement, PSSelectionState, PSAssignRequest, PSAssignResponse, GetPSRequest, ApiError } from '@/lib/types'
+import type { ProblemStatement, PSSelectionState, PSAssignRequest, PSAssignResponse, ApiError } from '@/lib/types'
 
 const API_BASE_URL = 'http://localhost:5000'
 const POLLING_INTERVAL = 5000 // 5 seconds
 
 export function PSSelectionDashboard() {
-  const { user, assignedPS, setAssignedPS } = useAuth()
+  const { user, assignedPS, setAssignedPS, isLoading: authLoading } = useAuth()
+  
+  // Debug logging for persistence
+  useEffect(() => {
+    console.log('PSSelectionDashboard mounted/updated:', {
+      userTeamId: user?.team_id,
+      hasAssignedPS: !!assignedPS,
+      assignedPSId: assignedPS?.id,
+      authLoading
+    })
+  }, [user?.team_id, assignedPS, authLoading])
   
   const [state, setState] = useState<PSSelectionState>({
     problemStatements: [],
@@ -26,7 +36,14 @@ export function PSSelectionDashboard() {
 
   // Fetch problem statements with polling
   const fetchProblemStatements = useCallback(async () => {
+    // Safety check: Don't fetch if team already has assigned PS
+    if (assignedPS) {
+      console.log('Skipping fetchProblemStatements - team already has assigned PS:', assignedPS.id)
+      return
+    }
+    
     try {
+      console.log('Calling get_all_ps API...')
       const response = await fetch(`${API_BASE_URL}/get_all_ps`)
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
@@ -65,39 +82,34 @@ export function PSSelectionDashboard() {
     }
   }, [])
 
-  // Check if user already has an assigned PS
-  const checkExistingAssignment = useCallback(async () => {
-    if (!user?.team_id) return
-    
-    try {
-      const requestData: GetPSRequest = { teamID: user.team_id }
-      const response = await fetch(`${API_BASE_URL}/get_ps`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(requestData)
-      })
-
-      if (response.ok) {
-        const assignedData: ProblemStatement = await response.json()
-        if (assignedData && assignedData.id) {
-          setAssignedPS(assignedData)
-        }
-      }
-    } catch (error) {
-      console.error('Error checking existing assignment:', error)
-    }
-  }, [user?.team_id, setAssignedPS])
-
-  // Set up polling and check existing assignment
+  // Set up polling for problem statements (only for teams without assignments)
   useEffect(() => {
-    if (assignedPS) return // Don't poll if already assigned
+    // Don't do anything if auth is still loading
+    if (authLoading) {
+      console.log('Auth still loading, waiting...')
+      return
+    }
 
-    checkExistingAssignment()
+    if (assignedPS) {
+      // Team already has an assigned PS - no need to fetch anything
+      console.log('Team already has assigned PS (ID:', assignedPS.id, '), skipping get_all_ps API call')
+      return
+    }
+
+    // Only fetch PS options and start polling if we don't have an assignment
+    console.log('No assigned PS found, fetching available problem statements via get_all_ps')
     fetchProblemStatements()
-    const interval = setInterval(fetchProblemStatements, POLLING_INTERVAL)
     
-    return () => clearInterval(interval)
-  }, [fetchProblemStatements, checkExistingAssignment, assignedPS])
+    const interval = setInterval(() => {
+      console.log('Polling: fetching problem statements via get_all_ps')
+      fetchProblemStatements()
+    }, POLLING_INTERVAL)
+    
+    return () => {
+      console.log('Clearing polling interval')
+      clearInterval(interval)
+    }
+  }, [fetchProblemStatements, assignedPS, authLoading])
 
   // Handle PS selection
   const handlePSSelection = (ps: ProblemStatement) => {
@@ -130,8 +142,14 @@ export function PSSelectionDashboard() {
       if (response.ok) {
         const result: PSAssignResponse = await response.json()
         
-        if (result.success) {
+        console.log('Assignment API response:', result) // Debug log to see actual response structure
+        
+        // Check for success in multiple ways since API might return different formats
+        if (result.success === true || 
+            (result.message && result.message.includes('successfully')) ||
+            (!result.success && result.message && result.message.includes('successfully'))) {
           // Success: Trigger rocket animation!
+          console.log('PS assignment successful!')
           setAssignedPSNumber(state.selectedPS.id)
           setShowRocketAnimation(true)
         } else {
@@ -166,6 +184,25 @@ export function PSSelectionDashboard() {
     }))
   }
 
+  // If auth is still loading, show loading state
+  if (authLoading) {
+    return (
+      <>
+        <NavigationMenu />
+        <div className="min-h-screen bg-background flex items-center justify-center p-6">
+          <div className="glass-panel-theme rounded-2xl p-8 max-w-md w-full text-center">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+              className="w-16 h-16 border-4 border-primary/30 border-t-primary rounded-full mx-auto mb-4"
+            />
+            <p className="text-foreground/80 text-lg">Initializing mission control...</p>
+          </div>
+        </div>
+      </>
+    )
+  }
+
   // If already assigned, show mission assigned dashboard
   if (assignedPS) {
     return (
@@ -198,8 +235,13 @@ export function PSSelectionDashboard() {
                 )}
               </div>
               <p className="text-foreground/80 mb-6">
-                Your mission is now active. Report to your designated workstation and begin your assignment.
+                Your mission is now active and confirmed. Report to your designated workstation and begin your assignment.
               </p>
+              <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3 mb-4">
+                <p className="text-green-400 text-sm font-medium">
+                  ✅ Mission Assignment Complete - No further action required
+                </p>
+              </div>
               <div className="text-sm text-muted-foreground">
                 Team ID: <span className="text-primary font-mono">{user?.team_id}</span>
               </div>
