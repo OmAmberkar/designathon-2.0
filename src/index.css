@@ -73,6 +73,12 @@
   --gap: 1.5em;
 
   --cubic-default: cubic-bezier(0.65, 0.05, 0, 1);
+
+  /* Space/Cyberpunk Theme Variables */
+  --void-black: #020617;
+  --nebula-purple: #3b0764;
+  --starlight-green: #22c55e;
+  --warning-supernova: #ef4444;
 }
 
 @theme {
@@ -677,4 +683,171 @@ html.lenis body {
 
 .animate-fade-in-up {
   animation: fade-in-up 300ms ease-out forwards;
+}
+
+/* Space/Cyberpunk Theme Styles */
+
+/* Glassmorphism for UI panels */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 8px 32px 0 rgba(31, 38, 135, 0.37),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Theme-aware glassmorphism */
+.glass-panel-theme {
+  background: rgba(33, 30, 27, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(242, 124, 6, 0.2);
+  box-shadow: 
+    0 8px 32px 0 rgba(242, 124, 6, 0.15),
+    inset 0 1px 0 0 rgba(242, 124, 6, 0.1);
+}
+
+/* Starlight green glow effect */
+.glow-green {
+  box-shadow: 
+    0 0 15px rgba(34, 197, 94, 0.4),
+    0 0 30px rgba(34, 197, 94, 0.2),
+    0 0 45px rgba(34, 197, 94, 0.1);
+}
+
+.glow-green:hover {
+  box-shadow: 
+    0 0 20px rgba(34, 197, 94, 0.6),
+    0 0 40px rgba(34, 197, 94, 0.3),
+    0 0 60px rgba(34, 197, 94, 0.15);
+}
+
+/* Theme primary glow effect */
+.glow-primary {
+  box-shadow: 
+    0 0 15px rgba(242, 124, 6, 0.4),
+    0 0 30px rgba(242, 124, 6, 0.2),
+    0 0 45px rgba(242, 124, 6, 0.1);
+}
+
+.glow-primary:hover {
+  box-shadow: 
+    0 0 20px rgba(242, 124, 6, 0.6),
+    0 0 40px rgba(242, 124, 6, 0.3),
+    0 0 60px rgba(242, 124, 6, 0.15);
+}
+
+/* Enhanced backdrop blur utilities */
+.backdrop-blur-12 {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.backdrop-blur-16 {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Cyberpunk grid patterns */
+.cyber-grid {
+  background-image: 
+    linear-gradient(rgba(34, 197, 94, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 197, 94, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Neon text effect */
+.neon-text {
+  text-shadow: 
+    0 0 5px currentColor,
+    0 0 10px currentColor,
+    0 0 15px currentColor,
+    0 0 20px currentColor;
+}
+
+/* Holographic card effect */
+.holographic-card {
+  background: linear-gradient(
+    45deg,
+    rgba(15, 23, 42, 0.8) 0%,
+    rgba(30, 41, 59, 0.8) 25%,
+    rgba(15, 23, 42, 0.8) 50%,
+    rgba(30, 41, 59, 0.8) 75%,
+    rgba(15, 23, 42, 0.8) 100%
+  );
+  background-size: 400% 400%;
+  animation: holographic-shift 8s ease-in-out infinite;
+}
+
+@keyframes holographic-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Energy pulse animation */
+.energy-pulse {
+  animation: energy-pulse 2s ease-in-out infinite;
+}
+
+@keyframes energy-pulse {
+  0%, 100% {
+    box-shadow: 
+      0 0 5px rgba(34, 197, 94, 0.3),
+      0 0 10px rgba(34, 197, 94, 0.2),
+      0 0 15px rgba(34, 197, 94, 0.1);
+  }
+  50% {
+    box-shadow: 
+      0 0 10px rgba(34, 197, 94, 0.6),
+      0 0 20px rgba(34, 197, 94, 0.4),
+      0 0 30px rgba(34, 197, 94, 0.2);
+  }
+}
+
+/* Terminal typing effect */
+.terminal-cursor::after {
+  content: "_";
+  animation: terminal-blink 1s infinite;
+  color: #22c55e;
+}
+
+@keyframes terminal-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Utility classes for text truncation */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Starfield particles */
+.starfield-particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
 }

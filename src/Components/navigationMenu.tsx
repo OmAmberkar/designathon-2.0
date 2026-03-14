@@ -3,6 +3,8 @@ import gsap from "gsap";
 import { CustomEase } from "gsap/CustomEase";
 import { useLenis } from "@/lib/Lenis";
 import { useScrollEngine } from "@/lib/scroll-engine-context";
+import { useAuth } from "@/lib/auth";
+import { useNavigate } from "@tanstack/react-router";
 import SocialIcons from "./HeroSection/SocialIcons";
 
 // register gsap plugins
@@ -22,6 +24,8 @@ export default function NavigationMenu() {
   const lastScrollY = useRef(0);
   const navHidden = useRef(false);
   const headerRef = useRef<HTMLDivElement>(null);
+  const { isAuthenticated, user, logout } = useAuth();
+  const navigate = useNavigate();
 
   // scroll-direction-aware nav visibility
   const updateNavVisibility = useCallback(() => {
@@ -318,8 +322,22 @@ export default function NavigationMenu() {
     e.preventDefault();
     setIsMenuOpen(false);
 
+    // Handle auth route
+    if (id === '/auth') {
+      setTimeout(() => {
+        navigate({ to: '/auth' });
+      }, 600);
+      return;
+    }
+
+    // Handle logout
+    if (id === 'logout') {
+      logout();
+      return;
+    }
+
     // strip leading # to get section id
-    const sectionId = id.startsWith("#") ? id.slice(1) : id;
+    const sectionId = id.startsWith("#") ? id.slice(1) : window.location.pathname + id;
 
     // delay scroll until close animation finishes
     setTimeout(() => {
@@ -341,6 +359,11 @@ export default function NavigationMenu() {
     { id: "#guidelines", label: "Guidelines", shape: "5" },
     { id: "#faqs", label: "FAQs", shape: "2" },
     { id: "#about", label: "About", shape: "1" },
+    ...(isAuthenticated ? [
+      { id: "logout", label: `Logout (${user?.name})`, shape: "1" }
+    ] : [
+      { id: "/auth", label: "Login", shape: "1" }
+    ])
   ];
 
   return (
