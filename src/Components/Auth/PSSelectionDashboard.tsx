@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '@/lib/auth'
 import { PSCard } from '@/Components/ui/ps-card'
@@ -6,11 +6,11 @@ import { RocketLanding3D } from '@/Components/ui/rocket-landing-3d'
 import NavigationMenu from '@/Components/navigationMenu'
 import type { ProblemStatement, PSSelectionState, PSAssignRequest, PSAssignResponse, ApiError } from '@/lib/types'
 
-const API_BASE_URL = 'http://localhost:5000'
-const POLLING_INTERVAL = 5000 // 5 seconds
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 export function PSSelectionDashboard() {
   const { user, assignedPS, setAssignedPS, isLoading: authLoading } = useAuth()
+  const eventSourceRef = useRef<EventSource | null>(null)
   
   // Debug logging for persistence
   useEffect(() => {
@@ -34,82 +34,64 @@ export function PSSelectionDashboard() {
   const [showRocketAnimation, setShowRocketAnimation] = useState(false)
   const [assignedPSNumber, setAssignedPSNumber] = useState<string>('')
 
-  // Fetch problem statements with polling
-  const fetchProblemStatements = useCallback(async () => {
-    // Safety check: Don't fetch if team already has assigned PS
-    if (assignedPS) {
-      console.log('Skipping fetchProblemStatements - team already has assigned PS:', assignedPS.id)
-      return
-    }
-    
-    try {
-      console.log('Calling get_all_ps API...')
-      const response = await fetch(`${API_BASE_URL}/get_all_ps`)
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      const data = await response.json()
-      
-      // Backend returns: {"ps": [{"ID": "1", "Capacity": 0}, ...]}
-      // We need to transform to our expected format
-      let problemStatements: ProblemStatement[] = []
-      
-      if (data && Array.isArray(data.ps)) {
-        problemStatements = data.ps.map((ps: any) => ({
-          id: ps.ID || ps.id,
-          capacity: ps.Capacity !== undefined ? ps.Capacity : ps.capacity || 0,
-          title: ps.Title || ps.title || `Problem Statement ${ps.ID || ps.id}`,
-          description: ps.Description || ps.description || `Mission briefing: ${ps.Title || `Problem Statement ${ps.ID || ps.id}`}`,
-        }))
-      }
-      
-      console.log('Fetched problem statements:', problemStatements) // Debug log
-      
-      setState(prev => ({
-        ...prev,
-        problemStatements,
-        isLoading: false,
-        errorMessage: ''
-      }))
-    } catch (error) {
-      console.error('Error fetching problem statements:', error)
-      setState(prev => ({
-        ...prev,
-        problemStatements: [], // Ensure it's always an array
-        isLoading: false,
-        errorMessage: error instanceof Error ? error.message : 'Signal lost. Check your connection.'
-      }))
-    }
-  }, [])
+  // Transform backend data to frontend format
+  const transformPSData = (data: any): ProblemStatement[] => {
+    if (!data || !Array.isArray(data.ps)) return []
+    return data.ps.map((ps: any) => ({
+      id: ps.ID || ps.id,
+      capacity: ps.Capacity !== undefined ? ps.Capacity : ps.capacity || 0,
+      title: ps.Title || ps.title || `Problem Statement ${ps.ID || ps.id}`,
+      description: ps.Description || ps.description || `Mission briefing: ${ps.Title || `Problem Statement ${ps.ID || ps.id}`}`,
+    }))
+  }
 
-  // Set up polling for problem statements (only for teams without assignments)
+  // Set up SSE for real-time updates
   useEffect(() => {
     // Don't do anything if auth is still loading
-    if (authLoading) {
-      console.log('Auth still loading, waiting...')
-      return
+    if (authLoading) return
+
+    // If team already has assigned PS, no need to connect to SSE
+    if (assignedPS) return
+
+    console.log('Connecting to SSE for real-time PS updates...')
+
+    const eventSource = new EventSource(`${API_BASE_URL}/ps/stream`)
+    eventSourceRef.current = eventSource
+
+    eventSource.addEventListener('ps_update', (event) => {
+      try {
+        const data = JSON.parse(event.data)
+        const problemStatements = transformPSData(data)
+        
+        setState(prev => ({
+          ...prev,
+          problemStatements,
+          isLoading: false,
+          errorMessage: ''
+        }))
+      } catch (error) {
+        console.error('Error parsing SSE data:', error)
+      }
+    })
+
+    eventSource.onerror = (error) => {
+      console.error('SSE connection error:', error)
+      eventSource.close()
+      // Reconnect after 5 seconds
+      setTimeout(() => {
+        if (!assignedPS) {
+          console.log('Reconnecting to SSE...')
+          // The useEffect will handle reconnection via re-render
+        }
+      }, 5000)
     }
 
-    if (assignedPS) {
-      // Team already has an assigned PS - no need to fetch anything
-      console.log('Team already has assigned PS (ID:', assignedPS.id, '), skipping get_all_ps API call')
-      return
-    }
-
-    // Only fetch PS options and start polling if we don't have an assignment
-    console.log('No assigned PS found, fetching available problem statements via get_all_ps')
-    fetchProblemStatements()
-    
-    const interval = setInterval(() => {
-      console.log('Polling: fetching problem statements via get_all_ps')
-      fetchProblemStatements()
-    }, POLLING_INTERVAL)
-    
     return () => {
-      console.log('Clearing polling interval')
-      clearInterval(interval)
+      console.log('Closing SSE connection')
+      eventSource.close()
+      eventSourceRef.current = null
     }
-  }, [fetchProblemStatements, assignedPS, authLoading])
+  }, [authLoading, assignedPS, API_BASE_URL])
 
   // Handle PS selection
   const handlePSSelection = (ps: ProblemStatement) => {
@@ -438,6 +420,7 @@ export function PSSelectionDashboard() {
                       </div>
                       <motion.button
                         whileHover={!state.isAssigning ? { scale: 1.05 } : {}}
+                        id='book-btn'
                         whileTap={!state.isAssigning ? { scale: 0.95 } : {}}
                         onClick={confirmSelection}
                         disabled={state.isAssigning}
