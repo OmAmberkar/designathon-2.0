@@ -323,12 +323,12 @@ export default function NavigationMenu() {
     setIsMenuOpen(false);
 
     // Handle auth route
-    if (id === '/auth') {
-      setTimeout(() => {
-        navigate({ to: '/auth' });
-      }, 600);
-      return;
-    }
+    // if (id === '/auth') {
+    //   setTimeout(() => {
+    //     navigate({ to: '/auth' });
+    //   }, 600);
+    //   return;
+    // }
 
     // Handle logout
     if (id === 'logout') {

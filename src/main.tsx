@@ -43,7 +43,8 @@ const psSelectionRoute = createRoute({
 })
 
 // Create the route tree
-const routeTree = rootRoute.addChildren([indexRoute, authRoute, psSelectionRoute])
+// const routeTree = rootRoute.addChildren([indexRoute, authRoute, psSelectionRoute])
+const routeTree = rootRoute.addChildren([indexRoute])
 
 // Create a new router instance
 const router = createRouter({ routeTree })
