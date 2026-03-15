@@ -144,6 +144,7 @@ function AuthProviderInner({ children }: AuthProviderProps) {
     localStorage.removeItem('designathon_user')
     localStorage.removeItem('designathon_assigned_ps')
     localStorage.removeItem('designathon_auth_token')
+    window.location.href = '/.'
   }
 
   // Promise resolvers for the login flow
