@@ -29,7 +29,6 @@ export default tseslint.config(
       "@typescript-eslint/ban-ts-comment": "warn",
       "@typescript-eslint/no-empty-function": "warn",
       "@typescript-eslint/no-empty-interface": "warn",
-      "@typescript-eslint/ban-types": "warn",
     },
   },
 );

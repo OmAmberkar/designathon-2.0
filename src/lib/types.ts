@@ -31,6 +31,7 @@ export interface AuthContextType {
   isLoading: boolean;
   assignedPS: ProblemStatement | null;
   login: (email: string, password: string) => Promise<void>;
+  loginWithGoogle: () => Promise<boolean>;
   logout: () => void;
   setAssignedPS: (ps: ProblemStatement) => void;
 }
@@ -52,6 +53,7 @@ export interface AuthRequest {
 export interface AuthResponse {
   message: string;
   user: User;
+  access_token: string;
 }
 
 export interface PSAssignRequest {

@@ -5,6 +5,7 @@ import "@/index.css";
 import App from "@/App.tsx";
 import LenisProvider from "./lib/Lenis";
 import AuthPage from "@/Components/Auth/AuthPage";
+import PSSelectionPage from "@/Components/Auth/PSSelectionPage";
 import { AuthProvider } from "@/lib/auth";
 
 // Create a root route
@@ -34,8 +35,15 @@ const authRoute = createRoute({
   component: AuthPage,
 })
 
+// Create the PS Selection route
+const psSelectionRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/ps_selection',
+  component: PSSelectionPage,
+})
+
 // Create the route tree
-const routeTree = rootRoute.addChildren([indexRoute, authRoute])
+const routeTree = rootRoute.addChildren([indexRoute, authRoute, psSelectionRoute])
 
 // Create a new router instance
 const router = createRouter({ routeTree })
