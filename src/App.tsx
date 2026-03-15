@@ -172,6 +172,7 @@ function App() {
           >
             <About />
           </div>
+        
         </Suspense>
 
         <div
