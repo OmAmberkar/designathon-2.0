@@ -8,7 +8,7 @@ export default function PSSelectionPage() {
   useEffect(() => {
     const authToken = localStorage.getItem('designathon_auth_token')
     if (!authToken) {
-      navigate({ to: '/auth' })
+      // navigate({ to: '/auth' })
     }
   }, [navigate])
 

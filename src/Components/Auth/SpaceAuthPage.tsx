@@ -20,7 +20,7 @@ export function SpaceAuthPage() {
     try {
       await loginWithGoogle()
       // Navigate to PS selection after successful login
-      navigate({ to: '/ps_selection' })
+      // navigate({ to: '/ps_selection' })
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Authentication failed')
     } finally {
