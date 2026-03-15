@@ -248,11 +248,16 @@ function AuthProviderInner({ children }: AuthProviderProps) {
 
 // Main AuthProvider component that wraps the app with GoogleOAuthProvider
 export function AuthProvider({ children }: AuthProviderProps) {
-  return (
-    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-      <AuthProviderInner>{children}</AuthProviderInner>
-    </GoogleOAuthProvider>
-  )
+  // Commented out: Authentication is disabled
+  // return (
+  //   <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+  //     <AuthProviderInner>{children}</AuthProviderInner>
+  //   </GoogleOAuthProvider>
+  // )
+  
+  // Return children directly without auth context
+  // This effectively disables authentication features
+  return <>{children}</>
 }
 
 export function useAuth() {

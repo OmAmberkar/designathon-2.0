@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useAuth } from '@/lib/auth'
+// import { useAuth } from '@/lib/auth'
 import { PSCard } from '@/Components/ui/ps-card'
 import { RocketLanding3D } from '@/Components/ui/rocket-landing-3d'
 import NavigationMenu from '@/Components/navigationMenu'
@@ -9,7 +9,12 @@ import type { ProblemStatement, PSSelectionState, PSAssignRequest, PSAssignRespo
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 export function PSSelectionDashboard() {
-  const { user, assignedPS, setAssignedPS, isLoading: authLoading } = useAuth()
+  // Commented out: Authentication is disabled
+  // const { user, assignedPS, setAssignedPS, isLoading: authLoading } = useAuth()
+  const user: any = null
+  const assignedPS: any = null
+  const setAssignedPS = (ps: any) => {}
+  const authLoading = false
   const eventSourceRef = useRef<EventSource | null>(null)
   
   // Debug logging for persistence

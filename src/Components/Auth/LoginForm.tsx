@@ -13,7 +13,7 @@ export default function LoginForm({ onSwitchToSignup }: { onSwitchToSignup?: () 
     try {
       await loginWithGoogle()
       // Navigate to PS selection after successful login
-      navigate({ to: '/ps_selection' })
+      // navigate({ to: '/ps_selection' })
     } catch (err) {
       console.error('Google login failed:', err)
     } finally {
